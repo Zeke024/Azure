@@ -16,7 +16,9 @@ export const config: CommandConfig = {
   },
 };
 
-export default async (interaction: CommandInteraction): Promise<CommandResult> => {
+export default async (
+  interaction: CommandInteraction
+): Promise<CommandResult> => {
   const modal = new ModalBuilder()
     .setTitle("Hydrogen bypasser")
     .setCustomId("HYDROGEN_MODAL")

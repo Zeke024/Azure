@@ -1,4 +1,11 @@
-import { ActionRowBuilder, ButtonInteraction, ModalActionRowComponentBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
+import {
+  ActionRowBuilder,
+  ButtonInteraction,
+  ModalActionRowComponentBuilder,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+} from "discord.js";
 
 export default async (interaction: ButtonInteraction) => {
   if (!interaction.isButton()) return;

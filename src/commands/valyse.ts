@@ -16,7 +16,9 @@ export const config: CommandConfig = {
   },
 };
 
-export default async (interaction: CommandInteraction): Promise<CommandResult> => {
+export default async (
+  interaction: CommandInteraction
+): Promise<CommandResult> => {
   const modal = new ModalBuilder()
     .setTitle("Valyse bypasser")
     .setCustomId("VALYSE_MODAL")

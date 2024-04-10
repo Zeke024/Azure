@@ -8,7 +8,13 @@ import { Partials } from "discord.js";
 export default {
   clientOptions: {
     intents: ["Guilds"],
-    partials: [Partials.Channel, Partials.Message, Partials.User, Partials.GuildMember, Partials.Reaction],
+    partials: [
+      Partials.Channel,
+      Partials.Message,
+      Partials.User,
+      Partials.GuildMember,
+      Partials.Reaction,
+    ],
     allowedMentions: {
       repliedUser: false,
     },

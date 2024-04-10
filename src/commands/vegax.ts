@@ -16,7 +16,9 @@ export const config: CommandConfig = {
   },
 };
 
-export default async (interaction: CommandInteraction): Promise<CommandResult> => {
+export default async (
+  interaction: CommandInteraction
+): Promise<CommandResult> => {
   const modal = new ModalBuilder()
     .setTitle("Vega X bypasser")
     .setCustomId("VEGAX_MODAL")

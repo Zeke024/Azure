@@ -13,8 +13,11 @@ function getInnermostCommands(commands: Record<string, CommandEntry>, prefix = "
 
   for (const key of keys) {
     if (commands[key].subcommands) {
-      //@ts-expect-error Fuck this.
-      const subInnermostCommands = getInnermostCommands(commands[key].subcommands, prefix ? `${prefix} ${key}` : key);
+      const subInnermostCommands = getInnermostCommands(
+        //@ts-expect-error Fuck this.
+        commands[key].subcommands,
+        prefix ? `${prefix} ${key}` : key
+      );
       innermostCommands = innermostCommands.concat(subInnermostCommands);
     } else {
       const commandPath = prefix ? `${prefix} ${key}` : key;
@@ -44,7 +47,10 @@ export default (): CommandResult => {
         .setColor("White")
         .setTimestamp()
         .setDescription(`Byte is a ROBLOX Key Bypasser Bot built with TypeScript, Discord.js, and Robo.js.`)
-        .addFields({ name: "Commands", value: `\`\`\`${formattedCommands.replaceAll("help menu", "this menu")}\`\`\`` }),
+        .addFields({
+          name: "Commands",
+          value: `\`\`\`${formattedCommands.replaceAll("help menu", "this menu")}\`\`\``,
+        }),
     ],
     components: getButtons().components,
   };

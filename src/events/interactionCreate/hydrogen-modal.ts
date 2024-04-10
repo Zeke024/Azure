@@ -1,6 +1,10 @@
 import { EmbedBuilder, ModalSubmitInteraction, codeBlock } from "discord.js";
 import { withCache } from "ultrafetch";
-import { getButtons, getErrorEmbed, getInvalidUrlEmbed } from "../../core/utils.js";
+import {
+  getButtons,
+  getErrorEmbed,
+  getInvalidUrlEmbed,
+} from "../../core/utils.js";
 import { ResponseData } from "../../types/index.js";
 import { client } from "robo.js";
 
@@ -9,13 +13,20 @@ export default async (interaction: ModalSubmitInteraction) => {
   if (interaction.customId !== "HYDROGEN_MODAL") return;
   const link = interaction.fields.getTextInputValue("HYDROGEN_LINK");
   await interaction.reply({
-    embeds: [new EmbedBuilder().setDescription("Loading...").setColor("Yellow").setTimestamp()],
+    embeds: [
+      new EmbedBuilder()
+        .setDescription("Loading...")
+        .setColor("Yellow")
+        .setTimestamp(),
+    ],
     ephemeral: false,
     fetchReply: true,
   });
 
   try {
-    if (!/^https:\/\/gateway\.platoboost\.com\/a\/2569\?id=[^&]{2,}/.test(link)) {
+    if (
+      !/^https:\/\/gateway\.platoboost\.com\/a\/2569\?id=[^&]{2,}/.test(link)
+    ) {
       const invalidLinkEmbed = getInvalidUrlEmbed(link, "Hydrogen");
 
       await interaction.editReply({
@@ -26,11 +37,14 @@ export default async (interaction: ModalSubmitInteraction) => {
 
     const enhancedFetch = withCache(fetch);
 
-    const response = await enhancedFetch(`${process.env.API_URL}/bypass?url=${link}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.API_KEY}`,
-      },
-    });
+    const response = await enhancedFetch(
+      `${process.env.API_URL}/bypass?url=${link}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.API_KEY}`,
+        },
+      }
+    );
 
     const data = (await response.json()) as ResponseData;
 
@@ -43,7 +57,9 @@ export default async (interaction: ModalSubmitInteraction) => {
             .setFooter({
               text: `User ID: ${new URL(link).searchParams.get("id")}`,
             })
-            .setThumbnail(client.user?.avatar ? client.user.displayAvatarURL() : null)
+            .setThumbnail(
+              client.user?.avatar ? client.user.displayAvatarURL() : null
+            )
             .setColor("White")
             .addFields(
               {

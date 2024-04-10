@@ -1,6 +1,10 @@
 import { EmbedBuilder, ModalSubmitInteraction, codeBlock } from "discord.js";
 import { withCache } from "ultrafetch";
-import { getButtons, getErrorEmbed, getInvalidUrlEmbed } from "../../core/utils.js";
+import {
+  getButtons,
+  getErrorEmbed,
+  getInvalidUrlEmbed,
+} from "../../core/utils.js";
 import { ResponseData } from "../../types/index.js";
 import { client } from "robo.js";
 
@@ -9,13 +13,22 @@ export default async (interaction: ModalSubmitInteraction) => {
   if (interaction.customId !== "HOHOHUB_MODAL") return;
   const link = interaction.fields.getTextInputValue("HOHOHUB_LINK");
   await interaction.reply({
-    embeds: [new EmbedBuilder().setDescription("Loading...").setColor("Yellow").setTimestamp()],
+    embeds: [
+      new EmbedBuilder()
+        .setDescription("Loading...")
+        .setColor("Yellow")
+        .setTimestamp(),
+    ],
     ephemeral: false,
     fetchReply: true,
   });
 
   try {
-    if (!/^https:\/\/hohohubv-ac90f67762c4\.herokuapp\.com\/api\/getkeyv2\?hwid=[^&]{2,}/.test(link)) {
+    if (
+      !/^https:\/\/hohohubv-ac90f67762c4\.herokuapp\.com\/api\/getkeyv2\?hwid=[^&]{2,}/.test(
+        link
+      )
+    ) {
       const invalidLinkEmbed = getInvalidUrlEmbed(link, "Hohohub");
 
       await interaction.editReply({
@@ -26,11 +39,14 @@ export default async (interaction: ModalSubmitInteraction) => {
 
     const enhancedFetch = withCache(fetch);
 
-    const response = await enhancedFetch(`${process.env.API_URL}/bypass?url=${link}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.API_KEY}`,
-      },
-    });
+    const response = await enhancedFetch(
+      `${process.env.API_URL}/bypass?url=${link}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.API_KEY}`,
+        },
+      }
+    );
 
     const data = (await response.json()) as ResponseData;
 
@@ -40,7 +56,9 @@ export default async (interaction: ModalSubmitInteraction) => {
           new EmbedBuilder()
             .setURL(link)
             .setTitle(`Hohohub Bypasser${data.cached ? " (CACHED)" : ""}`)
-            .setThumbnail(client.user?.avatar ? client.user.displayAvatarURL() : null)
+            .setThumbnail(
+              client.user?.avatar ? client.user.displayAvatarURL() : null
+            )
             .setColor("White")
             .addFields(
               {

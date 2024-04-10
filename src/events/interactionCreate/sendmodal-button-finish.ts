@@ -1,5 +1,11 @@
 import { UUID } from "node:crypto";
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder } from "discord.js";
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
+  EmbedBuilder,
+} from "discord.js";
 import { getSettings } from "../../commands/send-modal.js";
 import { Flashcore } from "robo.js";
 
@@ -24,7 +30,9 @@ export default async (interaction: ButtonInteraction) => {
       return;
     }
 
-    const channel = await interaction.guild?.channels?.fetch(settings.channelId);
+    const channel = await interaction.guild?.channels?.fetch(
+      settings.channelId
+    );
     if (!channel) {
       await interaction.reply({
         content: "The selected channel no longer exists.",
@@ -53,10 +61,12 @@ export default async (interaction: ButtonInteraction) => {
     const embed = new EmbedBuilder();
 
     if (settings.embeds?.title) embed.setTitle(settings.embeds.title);
-    if (settings.embeds?.description) embed.setDescription(settings.embeds.description);
+    if (settings.embeds?.description)
+      embed.setDescription(settings.embeds.description);
     if (settings.embeds?.color) embed.setColor(settings.embeds.color);
     if (settings.embeds?.image) embed.setImage(settings.embeds.image);
-    if (settings.embeds?.thumbnail) embed.setThumbnail(settings.embeds.thumbnail);
+    if (settings.embeds?.thumbnail)
+      embed.setThumbnail(settings.embeds.thumbnail);
     if (settings.embeds?.footer)
       embed.setFooter({
         text: settings.embeds.footer.text ?? "\u200b",
@@ -74,7 +84,9 @@ export default async (interaction: ButtonInteraction) => {
     ) {
       embed
         .setTitle(`${settings.executor} Bypasser`)
-        .setDescription(`Click the button below to bypass your ${settings.executor} key.`)
+        .setDescription(
+          `Click the button below to bypass your ${settings.executor} key.`
+        )
         .setColor("White")
         .setURL("https://discord.gg/kD3mujkFYn");
     }
@@ -90,7 +102,11 @@ export default async (interaction: ButtonInteraction) => {
                 .setStyle(ButtonStyle.Secondary)
                 .setEmoji("🔓")
                 .setDisabled(false)
-                .setCustomId(`BYPASS@${settings.executor.toUpperCase().replaceAll(" ", "")}`)
+                .setCustomId(
+                  `BYPASS@${settings.executor
+                    .toUpperCase()
+                    .replaceAll(" ", "")}`
+                )
             ),
         ],
       });
@@ -111,7 +127,9 @@ export default async (interaction: ButtonInteraction) => {
               .setStyle(ButtonStyle.Secondary)
               .setEmoji("🔓")
               .setDisabled(false)
-              .setCustomId(`BYPASS@${settings.executor.toUpperCase().replaceAll(" ", "")}`)
+              .setCustomId(
+                `BYPASS@${settings.executor.toUpperCase().replaceAll(" ", "")}`
+              )
           ),
       ],
     });
@@ -120,7 +138,11 @@ export default async (interaction: ButtonInteraction) => {
     await interaction.deleteReply();
   } catch (error) {
     await interaction.reply({
-      content: `${error instanceof Error ? error.message : "Something happened while trying to request to send the embed! Please try again."}`,
+      content: `${
+        error instanceof Error
+          ? error.message
+          : "Something happened while trying to request to send the embed! Please try again."
+      }`,
       ephemeral: true,
     });
     return;

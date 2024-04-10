@@ -1,6 +1,10 @@
 import { EmbedBuilder, ModalSubmitInteraction } from "discord.js";
 import { withCache } from "ultrafetch";
-import { getButtons, getInvalidUrlEmbed, getErrorEmbed } from "../../core/utils.js";
+import {
+  getButtons,
+  getInvalidUrlEmbed,
+  getErrorEmbed,
+} from "../../core/utils.js";
 import { ResponseData } from "../../types";
 import { client } from "robo.js";
 
@@ -9,7 +13,12 @@ export default async (interaction: ModalSubmitInteraction) => {
   if (interaction.customId !== "ARCEUSX_MODAL") return;
   const link = interaction.fields.getTextInputValue("ARCEUSX_LINK");
   await interaction.reply({
-    embeds: [new EmbedBuilder().setDescription("Loading...").setColor("Yellow").setTimestamp()],
+    embeds: [
+      new EmbedBuilder()
+        .setDescription("Loading...")
+        .setColor("Yellow")
+        .setTimestamp(),
+    ],
     ephemeral: false,
     fetchReply: true,
   });
@@ -25,11 +34,14 @@ export default async (interaction: ModalSubmitInteraction) => {
     }
 
     const enhancedFetch = withCache(fetch);
-    const response = await enhancedFetch(`${process.env.API_URL}/bypass?url=${link}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.API_KEY}`,
-      },
-    });
+    const response = await enhancedFetch(
+      `${process.env.API_URL}/bypass?url=${link}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.API_KEY}`,
+        },
+      }
+    );
 
     const data = (await response.json()) as ResponseData;
 
@@ -42,7 +54,9 @@ export default async (interaction: ModalSubmitInteraction) => {
             .setFooter({
               text: `HWID: ${new URL(link).searchParams.get("hwid")}`,
             })
-            .setThumbnail(client.user?.avatar ? client.user.displayAvatarURL() : null)
+            .setThumbnail(
+              client.user?.avatar ? client.user.displayAvatarURL() : null
+            )
             .setColor("White")
             .addFields(
               {

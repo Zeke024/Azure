@@ -1,4 +1,9 @@
-import { Flashcore, type CommandConfig, type CommandResult, logger } from "robo.js";
+import {
+  Flashcore,
+  type CommandConfig,
+  type CommandResult,
+  logger,
+} from "robo.js";
 import {
   ActionRowBuilder,
   BaseInteraction,
@@ -30,10 +35,13 @@ export const config: CommandConfig = {
   ],
 };
 
-export default async (interaction: CommandInteraction): Promise<CommandResult> => {
+export default async (
+  interaction: CommandInteraction
+): Promise<CommandResult> => {
   if (!interaction.memberPermissions?.has("ManageGuild")) {
     return {
-      content: "This command can only be used by server manager (users with Manage Guild permission).",
+      content:
+        "This command can only be used by server manager (users with Manage Guild permission).",
       ephemeral: true,
     };
   }
@@ -53,7 +61,10 @@ export default async (interaction: CommandInteraction): Promise<CommandResult> =
   };
 };
 
-export function createSetupMessage(interaction: BaseInteraction, settings: SendModalSettings): InteractionReplyOptions {
+export function createSetupMessage(
+  interaction: BaseInteraction,
+  settings: SendModalSettings
+): InteractionReplyOptions {
   let extraInfo = "";
 
   if (settings.channelId) {
@@ -134,8 +145,12 @@ export function createSetupMessage(interaction: BaseInteraction, settings: SendM
   return {
     content: extraInfo + `Adjust your embed settings here:\n\u200b`,
     components: [
-      new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(channelSelectMenu),
-      new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(editEmbedSelectMenu),
+      new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(
+        channelSelectMenu
+      ),
+      new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+        editEmbedSelectMenu
+      ),
       new ActionRowBuilder<ButtonBuilder>().addComponents(buttons),
     ],
   };
@@ -152,7 +167,10 @@ export async function getSettings(id: UUID): Promise<SendModalSettings> {
   return data ?? {};
 }
 
-export async function updateSettings(id: UUID, settings: SendModalSettings): Promise<SendModalSettings> {
+export async function updateSettings(
+  id: UUID,
+  settings: SendModalSettings
+): Promise<SendModalSettings> {
   if (!id) {
     throw new Error("ID is required to update settings!");
   }
@@ -163,7 +181,10 @@ export async function updateSettings(id: UUID, settings: SendModalSettings): Pro
     ...settings,
   };
 
-  await Flashcore.set<SendModalSettings>(`__send-modal__@${settings.id}`, newSettings);
+  await Flashcore.set<SendModalSettings>(
+    `__send-modal__@${settings.id}`,
+    newSettings
+  );
 
   logger.debug(`Updated settings for ID ${id}:`, newSettings);
 

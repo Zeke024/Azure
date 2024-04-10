@@ -15,7 +15,9 @@ export default async (interaction: StringSelectMenuInteraction) => {
   if (!interaction.customId.startsWith("SEND_MODAL_EDIT_EMBED@")) return;
   const id = interaction.customId.split("@")[1] as UUID;
 
-  const settings = await Flashcore.get<SendModalSettings>(`__send-modal__@${id}`);
+  const settings = await Flashcore.get<SendModalSettings>(
+    `__send-modal__@${id}`
+  );
   if (!settings) return;
   if (settings.authorId !== interaction.user.id) {
     return;

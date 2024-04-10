@@ -4,7 +4,9 @@ import { Collection, CommandInteraction, EmbedBuilder } from "discord.js";
 const cooldownTime = 15_000;
 const cooldown = new Collection();
 
-export default async function (data: MiddlewareData): Promise<MiddlewareResult> {
+export default async function (
+  data: MiddlewareData
+): Promise<MiddlewareResult> {
   const { type } = data.record;
 
   if (type === "event" || type === "api") {
@@ -27,7 +29,11 @@ export default async function (data: MiddlewareData): Promise<MiddlewareResult> 
       const embed = new EmbedBuilder()
         .setColor("Red")
         .setTitle(`You are on cooldown!`)
-        .setDescription(`You can use </${commandName}:${commandID}> again **<t:${Math.floor(expirationTime / 1000)}:R>**.`);
+        .setDescription(
+          `You can use </${commandName}:${commandID}> again **<t:${Math.floor(
+            expirationTime / 1000
+          )}:R>**.`
+        );
 
       if (remainingTime > 0) {
         await interaction.reply({ embeds: [embed], ephemeral: true });
