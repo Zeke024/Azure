@@ -1,13 +1,12 @@
 import { EmbedBuilder, ModalSubmitInteraction } from "discord.js";
 import { withCache } from "ultrafetch";
 import { getButtons, getInvalidUrlEmbed, getErrorEmbed } from "../../core/utils.js";
-import { ResponseData, WhitelistCacheData } from "../../types";
-import { client, Flashcore } from "@roboplay/robo.js";
+import { ResponseData } from "../../types";
+import { client } from "@roboplay/robo.js";
 
 export default async (interaction: ModalSubmitInteraction) => {
   if (!interaction.isModalSubmit()) return;
   if (interaction.customId !== "CODEX_MODAL") return;
-  const now = Date.now();
   const link = interaction.fields.getTextInputValue("CODEX_LINK");
   await interaction.reply({
     embeds: [new EmbedBuilder().setDescription("Loading...").setColor("Yellow").setTimestamp()],
@@ -25,45 +24,7 @@ export default async (interaction: ModalSubmitInteraction) => {
       return;
     }
 
-    const cache = await Flashcore.get<WhitelistCacheData>(link);
-    if (cache) {
-      let cacheDate = cache.date;
-      if (!(cacheDate instanceof Date)) {
-        cacheDate = new Date(cacheDate);
-      }
-
-      if (cacheDate.getTime() + 86400000 < Date.now()) {
-        await Flashcore.delete(link);
-      } else {
-        const took = (Date.now() - now) / 1000;
-        await interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-              .setURL(link)
-              .setTitle("Codex Bypasser (CACHED)")
-              .setThumbnail(client.user?.avatar ? client.user.displayAvatarURL() : null)
-              .setColor("White")
-              .addFields(
-                {
-                  name: "<:codex:1225819184982654986> Codex Response",
-                  value: `Key System completed!`,
-                  inline: true,
-                },
-                {
-                  name: "<:iOS_stopwatch:1225797873652994219> Response Time",
-                  value: `${took.toFixed(2)} seconds`,
-                  inline: true,
-                }
-              ),
-          ],
-          components: getButtons().components,
-        });
-        return;
-      }
-    }
-
     const enhancedFetch = withCache(fetch);
-    const start = Date.now();
     const response = await enhancedFetch(`${process.env.API_URL}/bypass?url=${link}`, {
       headers: {
         Authorization: `Bearer ${process.env.API_KEY}`,
@@ -73,14 +34,11 @@ export default async (interaction: ModalSubmitInteraction) => {
     const data = (await response.json()) as ResponseData;
 
     if (data.success) {
-      const end = Date.now();
-      const took = end - start;
-      const fixed = `${(took / 1000).toFixed(2)} seconds`;
       await interaction.editReply({
         embeds: [
           new EmbedBuilder()
             .setURL(link)
-            .setTitle("Codex Bypasser")
+            .setTitle(`Codex Bypasser${data.cached ? " (CACHED)" : ""}`)
             .setThumbnail(client.user?.avatar ? client.user.displayAvatarURL() : null)
             .setColor("White")
             .addFields(
@@ -91,14 +49,13 @@ export default async (interaction: ModalSubmitInteraction) => {
               },
               {
                 name: "<:iOS_stopwatch:1225797873652994219> Response Time",
-                value: `${fixed}`,
+                value: `${data.took}`,
                 inline: true,
               }
             ),
         ],
         components: getButtons().components,
       });
-      await Flashcore.set(link, { whitelisted: true, date: Date.now() });
       return;
     } else {
       return await interaction.editReply({

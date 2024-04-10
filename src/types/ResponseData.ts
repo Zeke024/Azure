@@ -3,4 +3,5 @@ export interface ResponseData {
   success: string;
   error: string;
   took: number;
+  cached: boolean;
 }
