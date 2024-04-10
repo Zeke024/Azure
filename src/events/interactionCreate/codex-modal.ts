@@ -73,12 +73,20 @@ export default async (interaction: ModalSubmitInteraction) => {
       return;
     } else {
       return await interaction.editReply({
-        ...getErrorEmbed(data.error || undefined),
+        ...(await getErrorEmbed(
+          data.error || undefined,
+          link,
+          interaction.user.id
+        )),
       });
     }
   } catch (error) {
     return await interaction.editReply({
-      ...getErrorEmbed(error instanceof Error ? error.message : undefined),
+      ...(await getErrorEmbed(
+        error instanceof Error ? error.message : undefined,
+        link,
+        interaction.user.id
+      )),
     });
   }
 };
