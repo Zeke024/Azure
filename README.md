@@ -1,7 +1,7 @@
 # 🤖 Byte (Bypasser Bot)
 
 [![discord.js](https://img.shields.io/github/package-json/dependency-version/byte-gg/byte/discord.js)](https://discord.js.org/)
-[![@roboplay/robo.js](https://img.shields.io/github/package-json/dependency-version/byte-gg/byte/@roboplay/robo.js)](https://docs.roboplay.dev/)
+[![@roboplay/robo.js](https://img.shields.io/github/package-json/dependency-version/byte-gg/byte/robo.js)](https://docs.roboplay.dev/)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-green.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 > Byte is a ROBLOX Key Bypasser Bot built with TypeScript, Discord.js, and Robo.js.
