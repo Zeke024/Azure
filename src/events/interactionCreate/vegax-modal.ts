@@ -24,11 +24,9 @@ export default async (interaction: ModalSubmitInteraction) => {
       return;
     }
 
-    const hwid = new URL(link).searchParams.get("hwid");
-
     const enhancedFetch = withCache(fetch);
 
-    const response = await enhancedFetch(`${process.env.API_URL}/bypass?hwid=${hwid}`, {
+    const response = await enhancedFetch(`${process.env.API_URL}/bypass?link=${link}`, {
       headers: {
         Authorization: `Bearer ${process.env.API_KEY}`,
       },
@@ -43,7 +41,7 @@ export default async (interaction: ModalSubmitInteraction) => {
             .setURL(link)
             .setTitle(`Vega X Bypasser${data.cached ? " (CACHED)" : ""}`)
             .setFooter({
-              text: `HWID: ${hwid}`,
+              text: `HWID: ${new URL(link).searchParams.get("hwid")}`,
             })
             .setThumbnail(client.user?.avatar ? client.user.displayAvatarURL() : null)
             .setColor("White")
