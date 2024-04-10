@@ -11,7 +11,7 @@ export default async (interaction: ModalSubmitInteraction) => {
   const link = interaction.fields.getTextInputValue("DELTA_LINK");
   await interaction.reply({
     embeds: [new EmbedBuilder().setDescription("Loading...").setColor("Yellow").setTimestamp()],
-    ephemeral: true,
+    ephemeral: false,
     fetchReply: true,
   });
   try {
