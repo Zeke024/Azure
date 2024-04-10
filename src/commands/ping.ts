@@ -1,4 +1,4 @@
-import { client, type CommandConfig } from "@roboplay/robo.js";
+import { client, type CommandConfig } from "robo.js";
 
 export const config: CommandConfig = {
   description: "Replies with Pong!",

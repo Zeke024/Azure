@@ -2,7 +2,7 @@ import { EmbedBuilder, ModalSubmitInteraction } from "discord.js";
 import { withCache } from "ultrafetch";
 import { getButtons, getInvalidUrlEmbed, getErrorEmbed } from "../../core/utils.js";
 import { ResponseData } from "../../types";
-import { client } from "@roboplay/robo.js";
+import { client } from "robo.js";
 
 export default async (interaction: ModalSubmitInteraction) => {
   if (!interaction.isModalSubmit()) return;
@@ -52,7 +52,7 @@ export default async (interaction: ModalSubmitInteraction) => {
               },
               {
                 name: "<:iOS_stopwatch:1225797873652994219> Response Time",
-                value: `${data.took.toString().replaceAll("s", " seconds")}`,
+                value: `${data.took}`,
                 inline: true,
               }
             ),

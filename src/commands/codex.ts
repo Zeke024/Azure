@@ -1,4 +1,4 @@
-import { type CommandConfig, type CommandResult } from "@roboplay/robo.js";
+import { type CommandConfig, type CommandResult } from "robo.js";
 import {
   type CommandInteraction,
   ModalActionRowComponentBuilder,
@@ -16,9 +16,7 @@ export const config: CommandConfig = {
   },
 };
 
-export default async (
-  interaction: CommandInteraction
-): Promise<CommandResult> => {
+export default async (interaction: CommandInteraction): Promise<CommandResult> => {
   const modal = new ModalBuilder()
     .setTitle("Codex bypasser")
     .setCustomId("CODEX_MODAL")

@@ -1,5 +1,5 @@
-import { getManifest } from "@roboplay/robo.js";
-import { CommandEntry, type CommandConfig, type CommandResult } from "@roboplay/robo.js";
+import { getManifest } from "robo.js";
+import { CommandEntry, type CommandConfig, type CommandResult } from "robo.js";
 import { EmbedBuilder } from "discord.js";
 import { getButtons } from "../core/utils.js";
 

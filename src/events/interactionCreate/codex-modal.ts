@@ -2,7 +2,7 @@ import { EmbedBuilder, ModalSubmitInteraction } from "discord.js";
 import { withCache } from "ultrafetch";
 import { getButtons, getInvalidUrlEmbed, getErrorEmbed } from "../../core/utils.js";
 import { ResponseData } from "../../types";
-import { client } from "@roboplay/robo.js";
+import { client } from "robo.js";
 
 export default async (interaction: ModalSubmitInteraction) => {
   if (!interaction.isModalSubmit()) return;

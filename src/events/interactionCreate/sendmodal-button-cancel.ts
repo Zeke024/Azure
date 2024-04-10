@@ -1,7 +1,7 @@
 import { UUID } from "node:crypto";
 import { ButtonInteraction } from "discord.js";
 import { getSettings } from "../../commands/send-modal.js";
-import { Flashcore } from "@roboplay/robo.js";
+import { Flashcore } from "robo.js";
 
 export default async (interaction: ButtonInteraction) => {
   if (!interaction.isButton()) return;
