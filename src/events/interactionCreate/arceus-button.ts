@@ -9,11 +9,12 @@ import {
 
 export default async (interaction: ButtonInteraction) => {
   if (!interaction.isButton()) return;
-  if (interaction.customId !== "BYPASS@ARCEUSX") return;
+  if (!interaction.customId.startsWith("BYPASS@ARCEUSX")) return;
+  const ephemeral = interaction.customId.split("@")[2] === "EPHEMERAL";
 
   const modal = new ModalBuilder()
     .setTitle("Arceus X bypasser")
-    .setCustomId("ARCEUSX_MODAL")
+    .setCustomId(`ARCEUSX_MODAL${ephemeral ? "@EPHEMERAL" : ""}`)
     .addComponents(
       new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
         new TextInputBuilder()

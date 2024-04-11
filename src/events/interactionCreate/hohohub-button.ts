@@ -9,11 +9,12 @@ import {
 
 export default async (interaction: ButtonInteraction) => {
   if (!interaction.isButton()) return;
-  if (interaction.customId !== "BYPASS@HOHOHUB") return;
+  if (!interaction.customId.startsWith("BYPASS@HOHOHUB")) return;
+  const ephemeral = interaction.customId.split("@")[2] === "EPHEMERAL";
 
   const modal = new ModalBuilder()
     .setTitle("Hohohub bypasser")
-    .setCustomId("HOHOHUB_MODAL")
+    .setCustomId(`HOHOHUB_MODAL@${ephemeral ? "EPHEMERAL" : ""}`)
     .addComponents(
       new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
         new TextInputBuilder()

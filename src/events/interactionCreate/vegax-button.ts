@@ -9,11 +9,12 @@ import {
 
 export default async (interaction: ButtonInteraction) => {
   if (!interaction.isButton()) return;
-  if (interaction.customId !== "BYPASS@VEGAX") return;
+  if (!interaction.customId.startsWith("BYPASS@VEGAX")) return;
+  const ephemeral = interaction.customId.split("@")[2] === "EPHEMERAL";
 
   const modal = new ModalBuilder()
     .setTitle("Vega X bypasser")
-    .setCustomId("VEGAX_MODAL")
+    .setCustomId(`VEGAX_MODAL${ephemeral ? "@EPHEMERAL" : ""}`)
     .addComponents(
       new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
         new TextInputBuilder()

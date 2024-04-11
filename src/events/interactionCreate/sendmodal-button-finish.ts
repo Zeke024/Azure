@@ -105,7 +105,7 @@ export default async (interaction: ButtonInteraction) => {
                 .setCustomId(
                   `BYPASS@${settings.executor
                     .toUpperCase()
-                    .replaceAll(" ", "")}`
+                    .replaceAll(" ", "")}@EPHEMERAL`
                 )
             ),
         ],
@@ -128,7 +128,9 @@ export default async (interaction: ButtonInteraction) => {
               .setEmoji("🔓")
               .setDisabled(false)
               .setCustomId(
-                `BYPASS@${settings.executor.toUpperCase().replaceAll(" ", "")}`
+                `BYPASS@${settings.executor
+                  .toUpperCase()
+                  .replaceAll(" ", "")}@EPHEMERAL`
               )
           ),
       ],

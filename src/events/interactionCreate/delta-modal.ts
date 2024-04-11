@@ -10,8 +10,8 @@ import { client } from "robo.js";
 
 export default async (interaction: ModalSubmitInteraction) => {
   if (!interaction.isModalSubmit()) return;
-  if (interaction.customId !== "DELTA_MODAL") return;
-
+  if (!interaction.customId.startsWith("DELTA_MODAL")) return;
+  const ephemeral = interaction.customId.split("@")[1] === "EPHEMERAL";
   const link = interaction.fields.getTextInputValue("DELTA_LINK");
   await interaction.reply({
     embeds: [
@@ -20,7 +20,7 @@ export default async (interaction: ModalSubmitInteraction) => {
         .setColor("Yellow")
         .setTimestamp(),
     ],
-    ephemeral: false,
+    ephemeral,
     fetchReply: true,
   });
   try {
@@ -76,21 +76,35 @@ export default async (interaction: ModalSubmitInteraction) => {
       });
       return;
     } else {
+      if (!ephemeral) {
+        return await interaction.editReply({
+          ...(await getErrorEmbed(
+            data.error || undefined,
+            link,
+            interaction.user.id
+          )),
+        });
+      } else {
+        return await interaction.editReply({
+          ...(await getErrorEmbed(data.error || undefined)),
+        });
+      }
+    }
+  } catch (error) {
+    if (!ephemeral) {
       return await interaction.editReply({
         ...(await getErrorEmbed(
-          data.error || undefined,
+          error instanceof Error ? error.message : undefined,
           link,
           interaction.user.id
         )),
       });
+    } else {
+      return await interaction.editReply({
+        ...(await getErrorEmbed(
+          error instanceof Error ? error.message : undefined
+        )),
+      });
     }
-  } catch (error) {
-    return await interaction.editReply({
-      ...(await getErrorEmbed(
-        error instanceof Error ? error.message : undefined,
-        link,
-        interaction.user.id
-      )),
-    });
   }
 };

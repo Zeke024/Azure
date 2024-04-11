@@ -9,11 +9,12 @@ import {
 
 export default async (interaction: ButtonInteraction) => {
   if (!interaction.isButton()) return;
-  if (interaction.customId !== "BYPASS@VALYSE") return;
+  if (!interaction.customId.startsWith("BYPASS@VALYSE")) return;
+  const ephemeral = interaction.customId.split("@")[2] === "EPHEMERAL";
 
   const modal = new ModalBuilder()
     .setTitle("Valyse bypasser")
-    .setCustomId("VALYSE_MODAL")
+    .setCustomId(`VALYSE_MODAL${ephemeral ? "@EPHEMERAL" : ""}`)
     .addComponents(
       new ActionRowBuilder<ModalActionRowComponentBuilder>().addComponents(
         new TextInputBuilder()
