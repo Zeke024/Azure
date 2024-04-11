@@ -39,7 +39,7 @@ export default async (interaction: ModalSubmitInteraction) => {
     const enhancedFetch = withCache(fetch);
 
     const response = await enhancedFetch(
-      `${process.env.API_URL}/bypass?link=${link}`,
+      `${process.env.API_URL}/bypass?url=${link}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.API_KEY}`,
