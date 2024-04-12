@@ -4,23 +4,22 @@ import {
   TextChannel,
   WebhookClient,
 } from "discord.js";
-import { COMMAND_LOGGER } from "../../core/config.js";
 import { logger as defaultLogger, color } from "robo.js";
 const discordLogger = defaultLogger.fork("discord");
 export default async (interaction: CommandInteraction) => {
   if (!interaction.isCommand()) return;
 
-  if (!COMMAND_LOGGER.WEBHOOK)
+  if (!process.env.COMMAND_LOG_WEBHOOK)
     return discordLogger.warn(
       `${color.bold(
         "COMMAND_LOGGER.WEBHOOK"
       )} is not set! Skipping command logger.`
     );
-  if (!COMMAND_LOGGER.WEBHOOK.startsWith("https://discord.com/api/webhooks/"))
+  if (!process.env.COMMAND_LOG_WEBHOOK.startsWith("https://discord.com/api/webhooks/"))
     return discordLogger.warn(
       `COMMAND_LOGGER.WEBHOOK is not a valid webhook! Skipping command logger.`
     );
-  const webhook = new WebhookClient({ url: COMMAND_LOGGER.WEBHOOK });
+  const webhook = new WebhookClient({ url: process.env.COMMAND_LOG_WEBHOOK });
 
   const embed = new EmbedBuilder()
     .setColor("White")
